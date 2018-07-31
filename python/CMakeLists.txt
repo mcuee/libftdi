@@ -1,5 +1,5 @@
 # workaround for cmake bug #0013449
-if ( NOT DEFINED CMAKE_FIND_ROOT_PATH )
+if ( NOT DEFINED CMAKE_FIND_ROOT_PATH OR CMAKE_VERSION VERSION_GREATER_EQUAL 3.0.0 )
   find_package ( SWIG REQUIRED )
 else ()
   find_program ( SWIG_EXECUTABLE NAMES swig2.0 swig )

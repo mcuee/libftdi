@@ -22,11 +22,13 @@ inline PyObject* charp2str(const char *v_, long len)
 inline char * str2charp_size(PyObject* pyObj, int * size)
 {
   char * v_ = 0;
+  Py_ssize_t len = 0;
 #if PY_MAJOR_VERSION >= 3
-  PyBytes_AsStringAndSize(pyObj, &v_, (Py_ssize_t*)size);
+  PyBytes_AsStringAndSize(pyObj, &v_, &len);
 #else
-  PyString_AsStringAndSize(pyObj, &v_, (Py_ssize_t*)size);
+  PyString_AsStringAndSize(pyObj, &v_, &len);
 #endif
+  *size = len;
   return v_;
 }
 %}

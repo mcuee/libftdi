@@ -35,6 +35,8 @@
 #include <stdlib.h>
 
 #include "ftdi_i.h"
+/* Prevent deprecated messages when building library */
+#define _FTDI_DISABLE_DEPRECATED
 #include "ftdi.h"
 #include "ftdi_version_i.h"
 
@@ -1016,12 +1018,43 @@ int ftdi_usb_reset(struct ftdi_context *ftdi)
 
 /**
     Clears the read buffer on the chip and the internal read buffer.
+    This is the correct behavior for an RX flush.
 
     \param ftdi pointer to ftdi_context
 
     \retval  0: all fine
     \retval -1: read buffer purge failed
     \retval -2: USB device unavailable
+*/
+int ftdi_tciflush(struct ftdi_context *ftdi)
+{
+    if (ftdi == NULL || ftdi->usb_dev == NULL)
+        ftdi_error_return(-2, "USB device unavailable");
+
+    if (libusb_control_transfer(ftdi->usb_dev, FTDI_DEVICE_OUT_REQTYPE,
+                                SIO_RESET_REQUEST, SIO_TCIFLUSH,
+                                ftdi->index, NULL, 0, ftdi->usb_write_timeout) < 0)
+        ftdi_error_return(-1, "FTDI purge of RX buffer failed");
+
+    // Invalidate data in the readbuffer
+    ftdi->readbuffer_offset = 0;
+    ftdi->readbuffer_remaining = 0;
+
+    return 0;
+}
+
+
+/**
+    Clears the write buffer on the chip and the internal read buffer.
+    This is incorrect behavior for an RX flush.
+
+    \param ftdi pointer to ftdi_context
+
+    \retval  0: all fine
+    \retval -1: write buffer purge failed
+    \retval -2: USB device unavailable
+
+    \deprecated Use \ref ftdi_tciflush(struct ftdi_context *ftdi)
 */
 int ftdi_usb_purge_rx_buffer(struct ftdi_context *ftdi)
 {
@@ -1042,12 +1075,39 @@ int ftdi_usb_purge_rx_buffer(struct ftdi_context *ftdi)
 
 /**
     Clears the write buffer on the chip.
+    This is correct behavior for a TX flush.
 
     \param ftdi pointer to ftdi_context
 
     \retval  0: all fine
     \retval -1: write buffer purge failed
     \retval -2: USB device unavailable
+*/
+int ftdi_tcoflush(struct ftdi_context *ftdi)
+{
+    if (ftdi == NULL || ftdi->usb_dev == NULL)
+        ftdi_error_return(-2, "USB device unavailable");
+
+    if (libusb_control_transfer(ftdi->usb_dev, FTDI_DEVICE_OUT_REQTYPE,
+                                SIO_RESET_REQUEST, SIO_TCOFLUSH,
+                                ftdi->index, NULL, 0, ftdi->usb_write_timeout) < 0)
+        ftdi_error_return(-1, "FTDI purge of TX buffer failed");
+
+    return 0;
+}
+
+
+/**
+    Clears the read buffer on the chip.
+    This is incorrect behavior for a TX flush.
+
+    \param ftdi pointer to ftdi_context
+
+    \retval  0: all fine
+    \retval -1: read buffer purge failed
+    \retval -2: USB device unavailable
+
+    \deprecated Use \ref ftdi_tcoflush(struct ftdi_context *ftdi)
 */
 int ftdi_usb_purge_tx_buffer(struct ftdi_context *ftdi)
 {
@@ -1063,7 +1123,8 @@ int ftdi_usb_purge_tx_buffer(struct ftdi_context *ftdi)
 }
 
 /**
-    Clears the buffers on the chip and the internal read buffer.
+    Clears the RX and TX FIFOs on the chip and the internal read buffer.
+    This is correct behavior for both RX and TX flush.
 
     \param ftdi pointer to ftdi_context
 
@@ -1071,6 +1132,37 @@ int ftdi_usb_purge_tx_buffer(struct ftdi_context *ftdi)
     \retval -1: read buffer purge failed
     \retval -2: write buffer purge failed
     \retval -3: USB device unavailable
+*/
+int ftdi_tcioflush(struct ftdi_context *ftdi)
+{
+    int result;
+
+    if (ftdi == NULL || ftdi->usb_dev == NULL)
+        ftdi_error_return(-3, "USB device unavailable");
+
+    result = ftdi_tcoflush(ftdi);
+    if (result < 0)
+        return -1;
+
+    result = ftdi_tciflush(ftdi);
+    if (result < 0)
+        return -2;
+
+    return 0;
+}
+
+/**
+    Clears the buffers on the chip and the internal read buffer.
+    While coded incorrectly, the result is satisfactory.
+
+    \param ftdi pointer to ftdi_context
+
+    \retval  0: all fine
+    \retval -1: read buffer purge failed
+    \retval -2: write buffer purge failed
+    \retval -3: USB device unavailable
+
+    \deprecated Use \ref ftdi_tcioflush(struct ftdi_context *ftdi)
 */
 int ftdi_usb_purge_buffers(struct ftdi_context *ftdi)
 {

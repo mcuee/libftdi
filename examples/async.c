@@ -93,9 +93,9 @@ int main(int argc, char **argv)
         goto do_deinit;
     }
     ftdi_list_free(&devlist);
-    int err = ftdi_usb_purge_buffers(ftdi);
+    int err = ftdi_tcioflush(ftdi);
     if (err != 0) {
-        fprintf(stderr, "ftdi_usb_purge_buffer: %d: %s\n",
+        fprintf(stderr, "ftdi_tcioflush: %d: %s\n",
                 err, ftdi_get_error_string(ftdi));
         retval = -1;
         goto do_deinit;

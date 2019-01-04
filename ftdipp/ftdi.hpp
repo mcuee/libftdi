@@ -85,7 +85,8 @@ public:
     int open(const std::string& description);
     int close();
     int reset();
-    int flush(int mask = Input|Output);
+    int DEPRECATED(flush)(int mask = Input|Output);
+    int tcflush(int mask = Input|Output);
     int set_interface(enum ftdi_interface interface);
     void set_usb_device(struct libusb_device_handle *dev);
 

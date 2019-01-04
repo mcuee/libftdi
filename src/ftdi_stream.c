@@ -172,9 +172,9 @@ ftdi_readstream(struct ftdi_context *ftdi,
     }
 
     /* Purge anything remaining in the buffers*/
-    if (ftdi_usb_purge_buffers(ftdi) < 0)
+    if (ftdi_tcioflush(ftdi) < 0)
     {
-        fprintf(stderr,"Can't Purge\n");
+        fprintf(stderr,"Can't flush FIFOs & buffers\n");
         return 1;
     }
 

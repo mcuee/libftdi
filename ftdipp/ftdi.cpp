@@ -27,6 +27,7 @@ This exception does not invalidate any other reasons why a work based
 on this file might be covered by the GNU General Public License.
 */
 #include <libusb.h>
+#define _FTDI_DISABLE_DEPRECATED
 #include "ftdi.hpp"
 #include "ftdi_i.h"
 #include "ftdi.h"
@@ -157,6 +158,32 @@ int Context::flush(int mask)
 
     case Input | Output:
         ret = ftdi_usb_purge_buffers(d->ftdi);
+        break;
+
+    default:
+        // Emulate behavior of previous version.
+        ret = 1;
+        break;
+    }
+
+    return ret;
+}
+
+int Context::tcflush(int mask)
+{
+    int ret;
+
+    switch (mask & (Input | Output)) {
+    case Input:
+        ret = ftdi_tciflush(d->ftdi);
+        break;
+
+    case Output:
+        ret = ftdi_tcoflush(d->ftdi);
+        break;
+
+    case Input | Output:
+        ret = ftdi_tcioflush(d->ftdi);
         break;
 
     default:

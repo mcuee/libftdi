@@ -22,6 +22,13 @@
 #include <sys/time.h>
 #endif
 
+/* Define _FTDI_DISABLE_DEPRECATED to disable deprecated messages. */
+#ifdef _FTDI_DISABLE_DEPRECATED
+#define _Ftdi_Pragma(_msg)
+#else
+#define _Ftdi_Pragma(_msg) _Pragma(_msg)
+#endif
+
 /* 'interface' might be defined as a macro on Windows, so we need to
  * undefine it so as not to break the current libftdi API, because
  * struct ftdi_context has an 'interface' member
@@ -174,8 +181,45 @@ enum ftdi_module_detach_mode
 
 
 #define SIO_RESET_SIO 0
+
+/* ** WARNING ** SIO_RESET_PURGE_RX or SIO_RESET_PURGE_TX are values used
+ * internally by libftdi to purge the RX and/or TX FIFOs (buffers).
+ * APPLICATION PROGRAMS SHOULD NOT BE USING THESE VALUES. Application
+ * programs should use one of the ftdi_tciflush, ftdi_tcoflush, or
+ * ftdi_tcioflush functions which emulate the Linux serial port tcflush(3)
+ * function.
+ *
+ * History:
+ *
+ * The definitions for these values are with respect to the FTDI chip, not the
+ * CPU. That is, when the FTDI chip receives a USB control transfer request
+ * with the command SIO_RESET_PURGE_RX, the FTDI chip empties the FIFO
+ * containing data received from the CPU awaiting transfer out the serial
+ * port to the connected serial device (e.g., a modem). Likewise, upon
+ * reception of the SIO_RESET_PURGE_TX command, the FTDI chip empties the
+ * FIFO of data received from the attached serial device destined to be
+ * transmitted to the CPU.
+ *
+ * Unfortunately the coding of the previous releases of libfti assumed these
+ * commands had the opposite effect. This resulted in the function
+ * ftdi_usb_purge_tx_buffer clearing data received from the attached serial
+ * device.  Similarly, the function ftdi_usb_purge_rx_buffer cleared the
+ * FTDI FIFO containing data to be transmitted to the attached serial
+ * device.  More seriously, this latter function clear the libftid's
+ * internal buffer of data received from the serial device, destined
+ * to the application program.
+ */
+#ifdef __GNUC__
+#define SIO_RESET_PURGE_RX _Ftdi_Pragma("GCC warning \"SIO_RESET_PURGE_RX\" deprecated: - use tciflush() method") 1
+#define SIO_RESET_PURGE_TX _Ftdi_Pragma("GCC warning \"SIO_RESET_PURGE_RX\" deprecated: - use tcoflush() method") 2
+#else
+#pragma message("WARNING: You need to implement deprecated #define for this compiler")
 #define SIO_RESET_PURGE_RX 1
 #define SIO_RESET_PURGE_TX 2
+#endif
+/* New names for the values used internally to flush (purge). */
+#define SIO_TCIFLUSH 2
+#define SIO_TCOFLUSH 1
 
 #define SIO_DISABLE_FLOW_CTRL 0x0
 #define SIO_RTS_CTS_HS (0x1 << 8)
@@ -195,13 +239,17 @@ enum ftdi_module_detach_mode
    (taken from libusb) */
 #define FTDI_URB_USERCONTEXT_COOKIE ((void *)0x1)
 
+#ifdef _FTDI_DISABLE_DEPRECATED
+#define DEPRECATED(func) func
+#else
 #ifdef __GNUC__
-#define DEPRECATED(func) func __attribute__ ((deprecated))
+#define DEPRECATED(func) __attribute__ ((deprecated)) func
 #elif defined(_MSC_VER)
 #define DEPRECATED(func) __declspec(deprecated) func
 #else
 #pragma message("WARNING: You need to implement DEPRECATED for this compiler")
 #define DEPRECATED(func) func
+#endif
 #endif
 
 struct ftdi_transfer_control
@@ -509,9 +557,12 @@ extern "C"
 
     int ftdi_usb_close(struct ftdi_context *ftdi);
     int ftdi_usb_reset(struct ftdi_context *ftdi);
-    int ftdi_usb_purge_rx_buffer(struct ftdi_context *ftdi);
-    int ftdi_usb_purge_tx_buffer(struct ftdi_context *ftdi);
-    int ftdi_usb_purge_buffers(struct ftdi_context *ftdi);
+    int ftdi_tciflush(struct ftdi_context *ftdi);
+    int ftdi_tcoflush(struct ftdi_context *ftdi);
+    int ftdi_tcioflush(struct ftdi_context *ftdi);
+    int DEPRECATED(ftdi_usb_purge_rx_buffer(struct ftdi_context *ftdi));
+    int DEPRECATED(ftdi_usb_purge_tx_buffer(struct ftdi_context *ftdi));
+    int DEPRECATED(ftdi_usb_purge_buffers(struct ftdi_context *ftdi));
 
     int ftdi_set_baudrate(struct ftdi_context *ftdi, int baudrate);
     int ftdi_set_line_property(struct ftdi_context *ftdi, enum ftdi_bits_type bits,

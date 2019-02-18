@@ -1,3 +1,9 @@
+# swig_add_library behavior changed in cmake 3.13 and SWIG_MODULE_<target>_REAL_NAME
+# is no longer set by default so set policy to the old behavior.
+if(NOT CMAKE_VERSION VERSION_LESS 3.13.0)
+  cmake_policy(SET CMP0078 OLD)
+endif ()
+
 # workaround for cmake bug #0013449
 if ( NOT DEFINED CMAKE_FIND_ROOT_PATH OR NOT CMAKE_VERSION VERSION_LESS 3.0.0 )
   find_package ( SWIG REQUIRED )
@@ -19,7 +25,11 @@ link_directories ( ${CMAKE_CURRENT_BINARY_DIR}/../src )
 if ( DOCUMENTATION )
   set(CMAKE_SWIG_FLAGS -DDOXYGEN=${DOXYGEN_FOUND})
 endif()
-swig_add_module ( ftdi1 python ftdi1.i )
+if(NOT CMAKE_VERSION VERSION_LESS 3.8.0)
+  swig_add_library ( ftdi1 LANGUAGE python SOURCES ftdi1.i )
+else ()
+  swig_add_module ( ftdi1 python ftdi1.i )
+endif()
 swig_link_libraries ( ftdi1 ftdi1 )
 
 if ( LINK_PYTHON_LIBRARY )

@@ -19,7 +19,7 @@ inline PyObject* charp2str(const char *v_, long len)
 #endif
 }
 
-inline char * str2charp_size(PyObject* pyObj, int * size)
+char * str2charp_size(PyObject* pyObj, int * size)
 {
   char * v_ = 0;
   Py_ssize_t len = 0;

@@ -92,7 +92,12 @@ char * str2charp_size(PyObject* pyObj, int * size)
 %enddef
 %feature("autodoc", ftdi_read_data_docstring) ftdi_read_data;
 %typemap(in,numinputs=1) (unsigned char *buf, int size) %{ $2 = PyInt_AsLong($input);$1 = (unsigned char*)malloc($2*sizeof(char)); %}
-%typemap(argout) (unsigned char *buf, int size) %{ if(result<0) $2=0; $result = SWIG_Python_AppendOutput($result, charp2str((char*)$1, $2)); free($1); %}
+%typemap(argout) (unsigned char *buf, int size) %{
+        if(result<0)
+                $2=0;
+        $result = SWIG_Python_AppendOutput($result, charp2str((char*)$1, $2));
+        free($1);
+%}
     int ftdi_read_data(struct ftdi_context *ftdi, unsigned char *buf, int size);
 %clear (unsigned char *buf, int size);
 
@@ -132,7 +137,12 @@ char * str2charp_size(PyObject* pyObj, int * size)
 %clear int* value;
 
 %typemap(in,numinputs=1) (unsigned char *buf, int size) %{ $2 = PyInt_AsLong($input);$1 = (unsigned char*)malloc($2*sizeof(char)); %}
-%typemap(argout) (unsigned char *buf, int size) %{ if(result<0) $2=0; $result = SWIG_Python_AppendOutput($result, charp2str((char*)$1, $2)); free($1); %}
+%typemap(argout) (unsigned char *buf, int size) %{
+        if(result<0)
+                $2=0;
+        $result = SWIG_Python_AppendOutput($result, charp2str((char*)$1, $2));
+        free($1);
+%}
     int ftdi_get_eeprom_buf(struct ftdi_context *ftdi, unsigned char * buf, int size);
 %clear (unsigned char *buf, int size);
 

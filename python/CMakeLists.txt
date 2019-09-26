@@ -1,7 +1,7 @@
-# swig_add_library behavior changed in cmake 3.13 and SWIG_MODULE_<target>_REAL_NAME
-# is no longer set by default so set policy to the old behavior.
-if(NOT CMAKE_VERSION VERSION_LESS 3.13.0)
-  cmake_policy(SET CMP0078 OLD)
+# swig_add_library behavior changed in cmake 3.13 to no longer set
+# SWIG_MODULE_<target>_REAL_NAME, so restore the old behavior.
+if ( POLICY CMP0078 )
+  cmake_policy( SET CMP0078 OLD )
 endif ()
 
 # workaround for cmake bug #0013449

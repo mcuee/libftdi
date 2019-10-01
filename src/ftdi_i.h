@@ -125,6 +125,14 @@ struct ftdi_eeprom
     int data_order;
     int flow_control;
 
+    /* FT-X specific */
+    /** battery charger detector enable (see AN175) */
+    int bcd_enable;
+    /** battery charger power enable */
+    int bcd_pwr_enable;
+    /** battery charger deactivate sleep */
+    int bcd_deactivate_sleep;
+
     /** user data **/
     int user_data_addr;
     int user_data_size;

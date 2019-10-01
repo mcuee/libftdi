@@ -257,6 +257,9 @@ int main(int argc, char *argv[])
         CFG_FUNC("include", &cfg_include),
         CFG_INT("user_data_addr", 0x18, 0),
         CFG_STR("user_data_file", "", 0),
+        CFG_BOOL("bcd_enable", cfg_false, 0),
+        CFG_BOOL("bcd_pwr_enable", cfg_false, 0),
+        CFG_BOOL("bcd_no_sleep", cfg_false, 0),
         CFG_END()
     };
     cfg_t *cfg;
@@ -490,6 +493,10 @@ int main(int argc, char *argv[])
             eeprom_set_value(ftdi, CBUS_FUNCTION_2, cfg_getint(cfg, "cbusx2"));
         if (cfg_getint(cfg, "cbusx3") != -1)
             eeprom_set_value(ftdi, CBUS_FUNCTION_3, cfg_getint(cfg, "cbusx3"));
+
+        eeprom_set_value(ftdi, BCD_ENABLE, cfg_getbool(cfg, "bcd_enable"));
+        eeprom_set_value(ftdi, BCD_PWR_ENABLE, cfg_getbool(cfg, "bcd_pwr_enable"));
+        eeprom_set_value(ftdi, BCD_NO_SLEEP, cfg_getbool(cfg, "bcd_no_sleep"));
     }
 
     int invert = 0;

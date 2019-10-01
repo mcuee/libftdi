@@ -385,6 +385,9 @@ enum ftdi_eeprom_value
     RELEASE_NUMBER     = 55,
     EXTERNAL_OSCILLATOR= 56,
     USER_DATA_ADDR     = 57,
+    BCD_ENABLE         = 58,
+    BCD_PWR_ENABLE     = 59,
+    BCD_NO_SLEEP       = 60,
 };
 
 /**

@@ -3411,6 +3411,14 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
             break;
         case TYPE_230X:
             output[0x00] = 0x80; /* Actually, leave the default value */
+
+            if (eeprom->bcd_enable)
+                output[0x00] |= 1;
+            if (eeprom->bcd_pwr_enable)
+                output[0x00] |= 2;
+            if (eeprom->bcd_deactivate_sleep)
+                output[0x00] |= 4;
+
             /*FIXME: Make DBUS & CBUS Control configurable*/
             output[0x0c] = 0;    /* DBUS drive 4mA, CBUS drive 4 mA like factory default */
             for (j = 0; j <= 6; j++)
@@ -3784,6 +3792,9 @@ int ftdi_eeprom_decode(struct ftdi_context *ftdi, int verbose)
         {
             eeprom->cbus_function[i] =  buf[0x1a + i] & 0xFF;
         }
+        eeprom->bcd_enable     =  buf[0x00]       & 0x1;
+        eeprom->bcd_pwr_enable =  buf[0x00]       & 0x2;
+        eeprom->bcd_deactivate_sleep = buf[0x00]  & 0x4;
         eeprom->group0_drive   =  buf[0x0c]       & 0x03;
         eeprom->group0_schmitt =  buf[0x0c]       & IS_SCHMITT;
         eeprom->group0_slew    =  buf[0x0c]       & SLOW_SLEW;
@@ -4334,6 +4345,15 @@ int ftdi_set_eeprom_value(struct ftdi_context *ftdi, enum ftdi_eeprom_value valu
             break;
         case USER_DATA_ADDR:
             ftdi->eeprom->user_data_addr = value;
+            break;
+        case BCD_ENABLE:
+            ftdi->eeprom->bcd_enable = value;
+            break;
+        case BCD_PWR_ENABLE:
+            ftdi->eeprom->bcd_pwr_enable = value;
+            break;
+        case BCD_NO_SLEEP:
+            ftdi->eeprom->bcd_deactivate_sleep = value;
             break;
 
         default :

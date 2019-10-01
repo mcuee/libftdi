@@ -24,6 +24,8 @@ link_directories ( ${CMAKE_CURRENT_BINARY_DIR}/../src )
 
 if ( DOCUMENTATION )
   set(CMAKE_SWIG_FLAGS -DDOXYGEN=${DOXYGEN_FOUND})
+  # manually add dependency for new cmake / swig versions
+  set_property(SOURCE ftdi1.i PROPERTY DEPENDS ftdi1_doc.i)
 endif()
 if(NOT CMAKE_VERSION VERSION_LESS 3.8.0)
   swig_add_library ( ftdi1 LANGUAGE python SOURCES ftdi1.i )

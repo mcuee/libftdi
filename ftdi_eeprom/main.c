@@ -65,6 +65,27 @@ static int parse_cbus(cfg_t *cfg, cfg_opt_t *opt, const char *value, void *resul
     return -1;
 }
 
+static int parse_group0_drive(cfg_t *cfg, cfg_opt_t *opt, const char *value, void *result)
+{
+    static const char* options[] =
+    {
+        "4MA", "8MA", "12MA", "16MA"
+    };
+
+    int i;
+    for (i=0; i<sizeof(options)/sizeof(*options); i++)
+    {
+        if (!(strcasecmp(options[i], value)))
+        {
+            *(int *)result = i;
+            return 0;
+        }
+    }
+
+    cfg_error(cfg, "Invalid %s option '%s'", cfg_opt_name(opt), value);
+    return -1;
+}
+
 static int parse_cbush(cfg_t *cfg, cfg_opt_t *opt, const char *value, void *result)
 {
     static const char* options[] =
@@ -236,6 +257,7 @@ int main(int argc, char *argv[])
         CFG_INT_CB("cbusx1", -1, 0, parse_cbusx),
         CFG_INT_CB("cbusx2", -1, 0, parse_cbusx),
         CFG_INT_CB("cbusx3", -1, 0, parse_cbusx),
+        CFG_INT_CB("group0_drive", -1, 0, parse_group0_drive),
         CFG_BOOL("invert_txd", cfg_false, 0),
         CFG_BOOL("invert_rxd", cfg_false, 0),
         CFG_BOOL("invert_rts", cfg_false, 0),
@@ -479,6 +501,8 @@ int main(int argc, char *argv[])
             eeprom_set_value(ftdi, CBUS_FUNCTION_8, cfg_getint(cfg, "cbush8"));
         if (cfg_getint(cfg, "cbush9") != -1)
             eeprom_set_value(ftdi, CBUS_FUNCTION_9, cfg_getint(cfg, "cbush9"));
+        if (cfg_getint(cfg, "group0_drive") != -1)
+            eeprom_set_value(ftdi, GROUP0_DRIVE, cfg_getint(cfg, "group0_drive"));
     }
     else if (ftdi->type == TYPE_230X)
     {

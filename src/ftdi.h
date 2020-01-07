@@ -544,8 +544,8 @@ extern "C"
                                 char *manufacturer, int mnf_len,
                                 char *product, int prod_len,
                                 char *serial, int serial_len);
-    int ftdi_eeprom_set_strings(struct ftdi_context *ftdi, char * manufacturer,
-                                char * product, char * serial);
+    int ftdi_eeprom_set_strings(struct ftdi_context *ftdi, const char * manufacturer,
+                                const char * product, const char * serial);
 
     int ftdi_usb_open(struct ftdi_context *ftdi, int vendor, int product);
     int ftdi_usb_open_desc(struct ftdi_context *ftdi, int vendor, int product,

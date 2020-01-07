@@ -2724,8 +2724,8 @@ int ftdi_eeprom_initdefaults(struct ftdi_context *ftdi, char * manufacturer,
     return 0;
 }
 
-int ftdi_eeprom_set_strings(struct ftdi_context *ftdi, char * manufacturer,
-                            char * product, char * serial)
+int ftdi_eeprom_set_strings(struct ftdi_context *ftdi, const char * manufacturer,
+                            const char * product, const char * serial)
 {
     struct ftdi_eeprom *eeprom;
 

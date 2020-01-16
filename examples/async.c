@@ -3,7 +3,7 @@
    This program is distributed under the GPL, version 2
 */
 
-/* This programm switches to MPSSE mode, and sets and then reads back
+/* This program switches to MPSSE mode, and sets and then reads back
  * the high byte 3 times with three different values.
  * The expected read values are hard coded in ftdi_init
  * with 0x00, 0x55 and 0xaa
@@ -167,7 +167,7 @@ int main(int argc, char **argv)
             }
         }
         if (i < 1) {
-            printf("Async read unsuccessfull\n");
+            printf("Async read unsuccessful\n");
         }
     }
     printf("Read %02x %02x %02x\n", data[0], data[1], data[2]);

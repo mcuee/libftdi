@@ -23,7 +23,7 @@ set(c_headers     ${CMAKE_CURRENT_SOURCE_DIR}/ftdi.h CACHE INTERNAL "List of c h
 
 add_library(ftdi1 SHARED ${c_sources})
 
-math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatiblity with previous releases
+math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatibility with previous releases
 set_target_properties(ftdi1 PROPERTIES VERSION ${VERSION_FIXUP}.${MINOR_VERSION}.0 SOVERSION 2)
 # Prevent clobbering each other during the build
 set_target_properties ( ftdi1 PROPERTIES CLEAN_DIRECT_OUTPUT 1 )

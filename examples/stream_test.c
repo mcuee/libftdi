@@ -10,7 +10,7 @@
  * 3* uint32_t dont_care
  *
  * After start, data will be read in streaming until the program is aborted
- * Progess information wil be printed out
+ * Progress information will be printed out
  * If a filename is given on the command line, the data read will be
  * written to that file
  *
@@ -52,7 +52,7 @@ usage(const char *argv0)
            "[-n] don't check for special block structure\n"
            "\n"
            "If some filename is given, write data read to that file\n"
-           "Progess information is printed each second\n"
+           "Progress information is printed each second\n"
            "Abort with ^C\n"
            "\n"
            "Options:\n"

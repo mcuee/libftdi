@@ -134,7 +134,7 @@ int main(int argc, char **argv)
      *
      * TODO: Make these parameters settable from the command line
      *
-     * Parameters are choosen that sending a continous stream of 0x55 
+     * Parameters are chosen that sending a continuous stream of 0x55 
      * should give a square wave
      *
      */

@@ -14,7 +14,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 # Shared library
 add_library(ftdipp1 SHARED ${cpp_sources})
 
-math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatiblity with previous releases
+math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatibility with previous releases
 set_target_properties(ftdipp1 PROPERTIES VERSION ${VERSION_FIXUP}.${MINOR_VERSION}.0 SOVERSION 3)
 
 # Prevent clobbering each other during the build

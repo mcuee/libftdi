@@ -1,5 +1,5 @@
 /***************************************************************************
-                          ftdi.cpp  -  C++ wraper for libftdi
+                          ftdi.cpp  -  C++ wrapper for libftdi
                              -------------------
     begin                : Mon Oct 13 2008
     copyright            : (C) 2008-2017 by Marek Vavruša / libftdi developers

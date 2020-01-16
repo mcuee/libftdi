@@ -6,7 +6,7 @@
 #  CONFUSE_INCLUDE_DIR - where to find confuse.h
 #  CONFUSE_INCLUDE_DIRS - confuse includes
 #  CONFUSE_LIBRARY - where to find the Confuse library
-#  CONFUSE_LIBRARIES - aditional libraries
+#  CONFUSE_LIBRARIES - additional libraries
 #  CONFUSE_ROOT_DIR - root dir (ex. /usr/local)
 
 #=============================================================================

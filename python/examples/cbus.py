@@ -6,7 +6,7 @@ This program is distributed under the GPL, version 2.
 
 Demonstrate how to configure the FT230X USB UART bridge as follows:
   max_power     500 mA
-  CBUS3         Drive 1 (accomodate PCB error)
+  CBUS3         Drive 1 (accommodate PCB error)
 """
 
 import sys

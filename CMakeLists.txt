@@ -1,5 +1,5 @@
 # Project
-project(libftdi1)
+project(libftdi1 C)
 set(MAJOR_VERSION 1)
 set(MINOR_VERSION 4)
 set(PACKAGE libftdi1)
@@ -136,6 +136,7 @@ endif ()
 
 add_subdirectory(src)
 if ( FTDIPP )
+  project(libftdipp1 C CXX)
   add_subdirectory(ftdipp)
 endif ()
 if ( PYTHON_BINDINGS )

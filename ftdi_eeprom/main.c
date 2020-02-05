@@ -211,6 +211,7 @@ static void usage(const char *program)
     fprintf(stderr, "--build-eeprom          Build eeprom image\n");
     fprintf(stderr, "--erase-eeprom          Erase eeprom\n");
     fprintf(stderr, "--flash-eeprom          Flash eeprom\n");
+    fprintf(stderr, "--verbose               Print more information\n");
 }
 
 int main(int argc, char *argv[])
@@ -306,6 +307,8 @@ int main(int argc, char *argv[])
     int i;
     FILE *fp;
 
+    int verbose=0;
+
     struct ftdi_context *ftdi = NULL;
 
     printf("\nFTDI eeprom generator v%s\n", EEPROM_VERSION_STRING);
@@ -340,6 +343,10 @@ int main(int argc, char *argv[])
         else if (!strcmp(argv[i], "--build-eeprom"))
         {
             command = COMMAND_BUILD;
+        }
+        else if (!strcmp(argv[i], "--verbose"))
+        {
+            verbose = 1;
         }
         else
         {
@@ -419,7 +426,7 @@ int main(int argc, char *argv[])
 
     if (command == COMMAND_READ)
     {
-        ftdi_eeprom_decode(ftdi, 0 /* debug: 1 */);
+        ftdi_eeprom_decode(ftdi, verbose);
 
         eeprom_buf = malloc(my_eeprom_size);
         ftdi_get_eeprom_buf(ftdi, eeprom_buf, my_eeprom_size);

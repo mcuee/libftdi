@@ -93,7 +93,7 @@ struct ftdi_eeprom
     int cbus_function[10];
     /** Select high current drive on R devices. */
     int high_current;
-    /** Select high current drive on A channel (2232C */
+    /** Select high current drive on A channel (2232C). */
     int high_current_a;
     /** Select high current drive on B channel (2232C). */
     int high_current_b;

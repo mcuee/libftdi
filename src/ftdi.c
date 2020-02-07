@@ -3136,23 +3136,23 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
         case TYPE_2232C:
 
             output[0x00] = type2bit(eeprom->channel_a_type, TYPE_2232C);
-            if ( eeprom->channel_a_driver == DRIVER_VCP)
+            if (eeprom->channel_a_driver == DRIVER_VCP)
                 output[0x00] |= DRIVER_VCP;
             else
                 output[0x00] &= ~DRIVER_VCP;
 
-            if ( eeprom->high_current_a == HIGH_CURRENT_DRIVE)
+            if (eeprom->high_current_a)
                 output[0x00] |= HIGH_CURRENT_DRIVE;
             else
                 output[0x00] &= ~HIGH_CURRENT_DRIVE;
 
             output[0x01] = type2bit(eeprom->channel_b_type, TYPE_2232C);
-            if ( eeprom->channel_b_driver == DRIVER_VCP)
+            if (eeprom->channel_b_driver == DRIVER_VCP)
                 output[0x01] |= DRIVER_VCP;
             else
                 output[0x01] &= ~DRIVER_VCP;
 
-            if ( eeprom->high_current_b == HIGH_CURRENT_DRIVE)
+            if (eeprom->high_current_b)
                 output[0x01] |= HIGH_CURRENT_DRIVE;
             else
                 output[0x01] &= ~HIGH_CURRENT_DRIVE;
@@ -3180,7 +3180,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
             break;
         case TYPE_R:
             output[0x00] = type2bit(eeprom->channel_a_type, TYPE_R);
-            if (eeprom->high_current == HIGH_CURRENT_DRIVE_R)
+            if (eeprom->high_current)
                 output[0x00] |= HIGH_CURRENT_DRIVE_R;
             if (eeprom->channel_a_driver == DRIVER_VCP)
                 output[0x00] |= DRIVER_VCP;

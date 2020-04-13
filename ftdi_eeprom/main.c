@@ -203,7 +203,7 @@ static void usage(const char *program)
     fprintf(stderr, "Syntax: %s [...options...] <config-file>\n", program);
     fprintf(stderr, "Valid Options:\n");
     fprintf(stderr, "--device <description>  Specify device to open by description string. One of:\n");
-    fprintf(stderr, "         d:<devicenode>\n");
+    fprintf(stderr, "         d:<device node>\n");
     fprintf(stderr, "         i:<vendor>:<product>\n");
     fprintf(stderr, "         i:<vendor>:<product>:<index>\n");
     fprintf(stderr, "         s:<vendor>:<product>:<serial>\n");

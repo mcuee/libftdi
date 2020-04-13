@@ -4,6 +4,7 @@
 *.so
 *.lo
 *.la
+*.patch
 *.pc
 .deps/
 .libs/

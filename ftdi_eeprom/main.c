@@ -223,6 +223,7 @@ int main(int argc, char *argv[])
     {
         CFG_INT("vendor_id", 0, 0),
         CFG_INT("product_id", 0, 0),
+        CFG_INT("release_number", -1, 0),
         CFG_BOOL("self_powered", cfg_true, 0),
         CFG_BOOL("remote_wakeup", cfg_true, 0),
         CFG_BOOL("in_is_isochronous", cfg_false, 0),
@@ -458,6 +459,10 @@ int main(int argc, char *argv[])
 
     eeprom_set_value(ftdi, VENDOR_ID, cfg_getint(cfg, "vendor_id"));
     eeprom_set_value(ftdi, PRODUCT_ID, cfg_getint(cfg, "product_id"));
+
+    if (cfg_getint(cfg, "release_number") != -1) {
+        eeprom_set_value(ftdi, RELEASE_NUMBER, cfg_getint(cfg, "release_number"));
+    }
 
     eeprom_set_value(ftdi, SELF_POWERED, cfg_getbool(cfg, "self_powered"));
     eeprom_set_value(ftdi, REMOTE_WAKEUP, cfg_getbool(cfg, "remote_wakeup"));

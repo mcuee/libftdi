@@ -19,7 +19,7 @@ Byte.BIT| TYPE_AM TYPE_BM   TYPE_2232C       TYPE_R          TYPE_2232H       TY
 00.7    |      0       0   0                0                SUSPEND_DBUS7    channel_c_driver
 
 On TYPE_R 00.0 is set for the FT245R and cleared for the FT232R
-On TYPE_R 00.3 set mean D2XX, on other devices VCP
+On TYPE_R 00.3 set means D2XX, on other devices VCP
 
 01.0    |      0       0   channel_b_type                    channel_b_type   0
 01.1    |      0       0   channel_b_type                    channel_b_type   0

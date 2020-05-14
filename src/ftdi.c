@@ -3182,8 +3182,13 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
             output[0x00] = type2bit(eeprom->channel_a_type, TYPE_R);
             if (eeprom->high_current)
                 output[0x00] |= HIGH_CURRENT_DRIVE_R;
+
+            /* Field is inverted for TYPE_R: Bit 00.3 set to 1 is D2XX, VCP is 0 */
             if (eeprom->channel_a_driver)
+                output[0x00] &= ~DRIVER_VCP;
+            else
                 output[0x00] |= DRIVER_VCP;
+
             if (eeprom->external_oscillator)
                 output[0x00] |= 0x02;
             output[0x01] = 0x40; /* Hard coded Endpoint Size*/

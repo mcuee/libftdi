@@ -1,6 +1,6 @@
 * How to cross compile libftdi-1.x for Windows? *
    1 - Prepare a pkg-config wrapper according to
-       https://www.flameeyes.eu/autotools-mythbuster/pkgconfig/cross-compiling.html ,
+       https://autotools.io/pkgconfig/cross-compiling.html ,
        additionally export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS and
        PKG_CONFIG_ALLOW_SYSTEM_LIBS.
    2 - Write a CMake toolchain file according to

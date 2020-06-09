@@ -1,5 +1,5 @@
 --------------------------------------------------------------------
-libftdi version 1.4
+libftdi version 1.5rc
 --------------------------------------------------------------------
 
 libftdi - A library (using libusb) to talk to FTDI's UART/FIFO chips
@@ -63,5 +63,5 @@ make install
 More verbose build instructions are in "README.build"
 
 --------------------------------------------------------------------
-www.intra2net.com                             2003-2017 Intra2net AG
+www.intra2net.com                             2003-2020 Intra2net AG
 --------------------------------------------------------------------

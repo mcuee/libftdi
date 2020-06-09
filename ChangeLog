@@ -1,6 +1,31 @@
-New in 1.x - 2018-xx-xx
+New in 1.5rc1 - 2020-06-xx
 -----------------------
-* Added ftdi_setflowctrl_xonxoff()
+* Implement tc[io]flush methods & deprecate broken purge_buffers methods
+
+  Please check your code for ftdi_usb_purge_rx_buffer(),
+  ftdi_usb_purge_tx_buffer() and ftdi_usb_purge_buffers()
+  and migrate to the new ftdi_tc[io]flush() methods.
+
+  Old code will continue to function, but you'll get
+  a deprecation warning during compilation.
+
+* Add program to test buffer flush (purge) functionality
+* Add kernel driver auto attach/detach.
+  See new AUTO_DETACH_REATACH_SIO_MODULE option
+* Add ftdi_setflowctrl_xonxoff()
+* ftdi_eeprom / eeprom handling:
+  * Unify handling of all boolean eeprom flags
+  * Add device release number support
+  * Add channel_a_driver support for type xxR chips
+  * Add support for group0 drive levels on x232H chips
+  * Fix handling of high_current_drive parameter
+  * Fix inverted handling of VCP driver field for TYPE_R chips
+  * New --verbose option for eeprom decode operation
+* Add example code for async mode
+* Add SPDX license identifiers to the core library & ftdi_eeprom
+* Various python SWIG wrapper improvements
+* Various cmake file improvements
+* Fix small bugs in error code paths
 
 New in 1.4 - 2017-08-07
 -----------------------

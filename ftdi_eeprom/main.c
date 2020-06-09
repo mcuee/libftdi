@@ -2,7 +2,7 @@
                              main.c  -  description
                            -------------------
     begin                : Mon Apr  7 12:05:22 CEST 2003
-    copyright            : (C) 2003-2014 by Intra2net AG and the libftdi developers
+    copyright            : (C) 2003-2020 by Intra2net AG and the libftdi developers
     email                : opensource@intra2net.com
     SPDX-License-Identifier: GPL-2.0-only
  ***************************************************************************/

@@ -2,7 +2,7 @@
                           ftdi_i.h  -  description
                              -------------------
     begin                : Don Sep 9 2011
-    copyright            : (C) 2003-2017 by Intra2net AG and the libftdi developers
+    copyright            : (C) 2003-2020 by Intra2net AG and the libftdi developers
     email                : opensource@intra2net.com
     SPDX-License-Identifier: LGPL-2.1-only
  ***************************************************************************/

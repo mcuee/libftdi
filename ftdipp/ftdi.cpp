@@ -2,7 +2,7 @@
                           ftdi.cpp  -  C++ wrapper for libftdi
                              -------------------
     begin                : Mon Oct 13 2008
-    copyright            : (C) 2008-2017 by Marek Vavruša / libftdi developers
+    copyright            : (C) 2008-2020 by Marek Vavruša / libftdi developers
     email                : opensource@intra2net.com and marek@vavrusa.com
  ***************************************************************************/
 /*

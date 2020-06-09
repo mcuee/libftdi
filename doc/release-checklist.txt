@@ -13,7 +13,7 @@
 
 - Ensure all modifications are checked in
 
-- Sign tarball, build .src.rpm and sign it, too
+- Sign tarball
 
 - Create git tag:
   - git tag -s -u 24F006F5 v1.XX
@@ -21,7 +21,7 @@
   - git push --tags
 
 - Website
-  - Upload tarball and .src.rpm
+  - Upload tarball
   - Add ChangeLog to main page
   - Update URLs in download section
   - Generate API documentation and upload it

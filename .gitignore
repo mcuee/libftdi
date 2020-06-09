@@ -42,7 +42,6 @@ examples/simple
 
 # libftdi specific
 libftdi1-config
-libftdi1.spec
 
 # CMake
 CMakeCache.txt

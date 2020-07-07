@@ -1,4 +1,4 @@
-New in 1.5rc1 - 2020-06-xx
+New in 1.5 - 2020-07-07
 -----------------------
 * Implement tc[io]flush methods & deprecate broken purge_buffers methods
 

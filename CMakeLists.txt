@@ -136,7 +136,7 @@ endif ()
 
 add_subdirectory(src)
 if ( FTDIPP )
-  project(libftdipp1 C CXX)
+  project(libftdi1 C CXX)
   add_subdirectory(ftdipp)
 endif ()
 if ( PYTHON_BINDINGS )

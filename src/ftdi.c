@@ -1328,7 +1328,7 @@ static int ftdi_to_clkbits_AM(int baudrate, unsigned long *encoded_divisor)
    AM Type chips have only four fractional subdivisors at value[15:14]
    for subdivisors 0, 0.5, 0.25, 0.125
 */
-static int ftdi_to_clkbits(int baudrate, unsigned int clk, int clk_div, unsigned long *encoded_divisor)
+static int ftdi_to_clkbits(int baudrate, int clk, int clk_div, unsigned long *encoded_divisor)
 {
     static const char frac_code[8] = {0, 3, 2, 4, 1, 5, 6, 7};
     int best_baud = 0;
@@ -3044,10 +3044,13 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
         case TYPE_2232H:
         case TYPE_4232H:
             i += 2;
+			/* Fall through*/
         case TYPE_R:
             i += 2;
+			/* Fall through*/
         case TYPE_2232C:
             i += 2;
+			/* Fall through*/
         case TYPE_AM:
         case TYPE_BM:
             i += 0x94;
@@ -3438,15 +3441,20 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
     {
         case TYPE_230X:
             free_start += 2;
+			/* Fall through*/
         case TYPE_232H:
             free_start += 6;
+			/* Fall through*/
         case TYPE_2232H:
         case TYPE_4232H:
             free_start += 2;
+			/* Fall through*/
         case TYPE_R:
             free_start += 2;
+			/* Fall through*/
         case TYPE_2232C:
             free_start++;
+			/* Fall through*/
         case TYPE_AM:
         case TYPE_BM:
             free_start += 0x14;

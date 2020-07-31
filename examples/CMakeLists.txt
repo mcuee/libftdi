@@ -15,7 +15,9 @@ add_executable(baud_test baud_test.c)
 add_executable(stream_test stream_test.c)
 add_executable(eeprom eeprom.c)
 add_executable(async async.c)
-add_executable(purge_test purge_test.c)
+if(NOT MINGW)
+    add_executable(purge_test purge_test.c)
+endif(NOT MINGW)
 
 # Linkage
 target_link_libraries(simple ftdi1)
@@ -29,7 +31,9 @@ target_link_libraries(baud_test ftdi1)
 target_link_libraries(stream_test ftdi1)
 target_link_libraries(eeprom ftdi1)
 target_link_libraries(async ftdi1)
-target_link_libraries(purge_test ftdi1)
+if(NOT MINGW)
+    target_link_libraries(purge_test ftdi1)
+endif(NOT MINGW)
 
 # libftdi++ examples
 if( FTDIPP )

@@ -60,8 +60,9 @@ int main(void)
     while (1)
     {
         // Set bitmask from input
-        fgets(input, sizeof(input) - 1, stdin);
-        if (input[0] == '\n') break;
+        char *s = fgets(input, sizeof(input) - 1, stdin);
+        if (s == NULL || input[0] == '\n')
+            break;
         bitmask = strtol(input, NULL, 0);
         printf("Using bitmask 0x%02x\n", bitmask);
         f = ftdi_set_bitmode(ftdi, bitmask, BITMODE_CBUS);

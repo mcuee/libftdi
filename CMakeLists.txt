@@ -150,6 +150,7 @@ if ( EXAMPLES )
 endif ()
 add_subdirectory(packages)
 if ( BUILD_TESTS )
+  project(libftdi1 C CXX)
   add_subdirectory(test)
 endif ()
 

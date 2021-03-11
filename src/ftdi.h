@@ -609,8 +609,8 @@ extern "C"
 
     /* init eeprom for the given FTDI type */
     int ftdi_eeprom_initdefaults(struct ftdi_context *ftdi,
-                                 char * manufacturer, char *product,
-                                 char * serial);
+                                 const char * manufacturer, const char *product,
+                                 const char * serial);
     int ftdi_eeprom_build(struct ftdi_context *ftdi);
     int ftdi_eeprom_decode(struct ftdi_context *ftdi, int verbose);
 

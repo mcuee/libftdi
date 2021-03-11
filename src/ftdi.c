@@ -2576,8 +2576,8 @@ int ftdi_set_error_char(struct ftdi_context *ftdi,
     \retval -2: No struct ftdi_eeprom
     \retval -3: No connected device or device not yet opened
 */
-int ftdi_eeprom_initdefaults(struct ftdi_context *ftdi, char * manufacturer,
-                             char * product, char * serial)
+int ftdi_eeprom_initdefaults(struct ftdi_context *ftdi, const char * manufacturer,
+                             const char * product, const char * serial)
 {
     struct ftdi_eeprom *eeprom;
 

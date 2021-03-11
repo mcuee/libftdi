@@ -3421,7 +3421,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
             set_ft232h_cbus(eeprom, output);
 
             output[0x1e] = eeprom->chip;
-            fprintf(stderr,"FIXME: Build FT232H specific EEPROM settings\n");
+            /* FIXME: Build FT232H specific EEPROM settings */
             break;
         case TYPE_230X:
             output[0x00] = 0x80; /* Actually, leave the default value */

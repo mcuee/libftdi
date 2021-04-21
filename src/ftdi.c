@@ -485,27 +485,39 @@ int ftdi_usb_get_strings2(struct ftdi_context *ftdi, struct libusb_device *dev,
     if (libusb_get_device_descriptor(dev, &desc) < 0)
         ftdi_error_return(-11, "libusb_get_device_descriptor() failed");
 
-    if (manufacturer != NULL)
+    if (manufacturer != NULL && mnf_len > 0)
     {
-        if (libusb_get_string_descriptor_ascii(ftdi->usb_dev, desc.iManufacturer, (unsigned char *)manufacturer, mnf_len) < 0)
+        if (desc.iManufacturer == 0)
+        {
+            manufacturer[0] = '\0';
+        }
+        else if (libusb_get_string_descriptor_ascii(ftdi->usb_dev, desc.iManufacturer, (unsigned char *)manufacturer, mnf_len) < 0)
         {
             ftdi_usb_close_internal (ftdi);
             ftdi_error_return(-7, "libusb_get_string_descriptor_ascii() failed");
         }
     }
 
-    if (description != NULL)
+    if (description != NULL && desc_len > 0)
     {
-        if (libusb_get_string_descriptor_ascii(ftdi->usb_dev, desc.iProduct, (unsigned char *)description, desc_len) < 0)
+        if (desc.iProduct == 0)
+        {
+            description[0] = '\0';
+        }
+        else if (libusb_get_string_descriptor_ascii(ftdi->usb_dev, desc.iProduct, (unsigned char *)description, desc_len) < 0)
         {
             ftdi_usb_close_internal (ftdi);
             ftdi_error_return(-8, "libusb_get_string_descriptor_ascii() failed");
         }
     }
 
-    if (serial != NULL)
+    if (serial != NULL && serial_len > 0)
     {
-        if (libusb_get_string_descriptor_ascii(ftdi->usb_dev, desc.iSerialNumber, (unsigned char *)serial, serial_len) < 0)
+        if (desc.iSerialNumber == 0)
+        {
+            serial[0] = '\0';
+        }
+        else if (libusb_get_string_descriptor_ascii(ftdi->usb_dev, desc.iSerialNumber, (unsigned char *)serial, serial_len) < 0)
         {
             ftdi_usb_close_internal (ftdi);
             ftdi_error_return(-9, "libusb_get_string_descriptor_ascii() failed");

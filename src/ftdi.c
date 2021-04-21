@@ -2606,7 +2606,7 @@ int ftdi_eeprom_initdefaults(struct ftdi_context *ftdi, const char * manufacture
         ftdi_error_return(-3, "No connected device or device not yet opened");
 
     eeprom->vendor_id = 0x0403;
-    eeprom->use_serial = 1;
+    eeprom->use_serial = (serial != NULL);
     if ((ftdi->type == TYPE_AM) || (ftdi->type == TYPE_BM) ||
             (ftdi->type == TYPE_R))
         eeprom->product_id = 0x6001;
@@ -3101,15 +3101,18 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
     }
     output[0x11] = product_size*2 + 2;
 
-    // Addr 12: Offset of the serial string + 0x80, calculated later
-    // Addr 13: Length of serial string
-    output[0x12] = i | 0x80; // calculate offset
-    output[i & eeprom_size_mask] = serial_size*2 + 2, i++;
-    output[i & eeprom_size_mask] = 0x03, i++;
-    for (j = 0; j < serial_size; j++)
-    {
-        output[i & eeprom_size_mask] = eeprom->serial[j], i++;
-        output[i & eeprom_size_mask] = 0x00, i++;
+    if (eeprom->use_serial) {
+        // Addr 12: Offset of the serial string + 0x80, calculated later
+         // Addr 13: Length of serial string
+         output[0x12] = i | 0x80; // calculate offset
+         output[i & eeprom_size_mask] = serial_size*2 + 2, i++;
+         output[i & eeprom_size_mask] = 0x03, i++;
+         for (j = 0; j < serial_size; j++)
+         {
+             output[i & eeprom_size_mask] = eeprom->serial[j], i++;
+             output[i & eeprom_size_mask] = 0x00, i++;
+         }
+         output[0x13] = serial_size*2 + 2;
     }
 
     // Legacy port name and PnP fields for FT2232 and newer chips
@@ -3123,8 +3126,6 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
         output[i & eeprom_size_mask] = eeprom->is_not_pnp; /* as seen when written with FTD2XX */
         i++;
     }
-
-    output[0x13] = serial_size*2 + 2;
 
     if (ftdi->type > TYPE_AM) /* use_serial not used in AM devices */
     {

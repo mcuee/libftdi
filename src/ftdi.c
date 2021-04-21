@@ -3113,7 +3113,8 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
     }
 
     // Legacy port name and PnP fields for FT2232 and newer chips
-    if (ftdi->type > TYPE_BM)
+    // It doesn't appear when written with FT_Prog for FT4232H chip.
+    if (ftdi->type > TYPE_BM && ftdi->type != TYPE_4232H)
     {
         output[i & eeprom_size_mask] = 0x02; /* as seen when written with FTD2XX */
         i++;

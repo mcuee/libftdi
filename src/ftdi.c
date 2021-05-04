@@ -3103,16 +3103,16 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
 
     if (eeprom->use_serial) {
         // Addr 12: Offset of the serial string + 0x80, calculated later
-         // Addr 13: Length of serial string
-         output[0x12] = i | 0x80; // calculate offset
-         output[i & eeprom_size_mask] = serial_size*2 + 2, i++;
-         output[i & eeprom_size_mask] = 0x03, i++;
-         for (j = 0; j < serial_size; j++)
-         {
-             output[i & eeprom_size_mask] = eeprom->serial[j], i++;
-             output[i & eeprom_size_mask] = 0x00, i++;
-         }
-         output[0x13] = serial_size*2 + 2;
+        // Addr 13: Length of serial string
+        output[0x12] = i | 0x80; // calculate offset
+        output[i & eeprom_size_mask] = serial_size*2 + 2, i++;
+        output[i & eeprom_size_mask] = 0x03, i++;
+        for (j = 0; j < serial_size; j++)
+        {
+            output[i & eeprom_size_mask] = eeprom->serial[j], i++;
+            output[i & eeprom_size_mask] = 0x00, i++;
+        }
+        output[0x13] = serial_size*2 + 2;
     }
 
     // Legacy port name and PnP fields for FT2232 and newer chips

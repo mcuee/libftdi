@@ -25,8 +25,16 @@ if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
 endif(${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 # find libusb
-find_package ( USB1 REQUIRED )
-include_directories ( ${LIBUSB_INCLUDE_DIR} )
+find_package( PkgConfig )
+if (PkgConfig_FOUND)
+  pkg_check_modules( LIBUSB libusb-1.0 )
+  if (LIBUSB_FOUND)
+    include_directories ( ${LIBUSB_INCLUDE_DIRS} )
+  else()
+    find_package ( USB1 REQUIRED )
+    include_directories ( ${LIBUSB_INCLUDE_DIR} )
+  endif()
+endif()
 
 # Find Boost
 if (FTDIPP OR BUILD_TESTS)

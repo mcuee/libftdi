@@ -87,6 +87,27 @@ static int parse_group0_drive(cfg_t *cfg, cfg_opt_t *opt, const char *value, voi
     return -1;
 }
 
+static int parse_group1_drive(cfg_t *cfg, cfg_opt_t *opt, const char *value, void *result)
+{
+    static const char* options[] =
+    {
+        "4MA", "8MA", "12MA", "16MA"
+    };
+
+    int i;
+    for (i=0; i<sizeof(options)/sizeof(*options); i++)
+    {
+        if (!(strcasecmp(options[i], value)))
+        {
+            *(int *)result = i;
+            return 0;
+        }
+    }
+
+    cfg_error(cfg, "Invalid %s option '%s'", cfg_opt_name(opt), value);
+    return -1;
+}
+
 static int parse_cbush(cfg_t *cfg, cfg_opt_t *opt, const char *value, void *result)
 {
     static const char* options[] =
@@ -261,6 +282,11 @@ int main(int argc, char *argv[])
         CFG_INT_CB("cbusx2", -1, 0, parse_cbusx),
         CFG_INT_CB("cbusx3", -1, 0, parse_cbusx),
         CFG_INT_CB("group0_drive", -1, 0, parse_group0_drive),
+        CFG_BOOL("group0_slew", cfg_false, 0),
+        CFG_BOOL("group0_schmitt", cfg_false, 0),
+        CFG_INT_CB("group1_drive", -1, 0, parse_group1_drive),
+        CFG_BOOL("group1_slew", cfg_false, 0),
+        CFG_BOOL("group1_schmitt", cfg_false, 0),
         CFG_BOOL("invert_txd", cfg_false, 0),
         CFG_BOOL("invert_rxd", cfg_false, 0),
         CFG_BOOL("invert_rts", cfg_false, 0),
@@ -516,6 +542,12 @@ int main(int argc, char *argv[])
             eeprom_set_value(ftdi, CBUS_FUNCTION_9, cfg_getint(cfg, "cbush9"));
         if (cfg_getint(cfg, "group0_drive") != -1)
             eeprom_set_value(ftdi, GROUP0_DRIVE, cfg_getint(cfg, "group0_drive"));
+        eeprom_set_value(ftdi, GROUP0_SLEW, cfg_getbool(cfg, "group0_slew"));
+        eeprom_set_value(ftdi, GROUP0_SCHMITT, cfg_getbool(cfg, "group0_schmitt"));
+        if (cfg_getint(cfg, "group1_drive") != -1)
+            eeprom_set_value(ftdi, GROUP1_DRIVE, cfg_getint(cfg, "group1_drive"));
+        eeprom_set_value(ftdi, GROUP1_SLEW, cfg_getbool(cfg, "group1_slew"));
+        eeprom_set_value(ftdi, GROUP1_SCHMITT, cfg_getbool(cfg, "group1_schmitt"));
     }
     else if (ftdi->type == TYPE_230X)
     {

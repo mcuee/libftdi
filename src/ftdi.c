@@ -3424,13 +3424,13 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
                 output[0x0c] |= SLOW_SLEW;
 
             if (eeprom->group1_drive > DRIVE_16MA)
-                output[0x0d] |= DRIVE_16MA;
+                output[0x0c] |= DRIVE_16MA<<4;
             else
-                output[0x0d] |= eeprom->group1_drive;
+                output[0x0c] |= eeprom->group1_drive<<4;
             if (eeprom->group1_schmitt)
-                output[0x0d] |= IS_SCHMITT;
+                output[0x0c] |= IS_SCHMITT<<4;
             if (eeprom->group1_slew)
-                output[0x0d] |= SLOW_SLEW;
+                output[0x0c] |= SLOW_SLEW<<4;
 
             set_ft232h_cbus(eeprom, output);
 

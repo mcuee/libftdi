@@ -2218,6 +2218,24 @@ int ftdi_set_bitmode(struct ftdi_context *ftdi, unsigned char bitmask, unsigned 
 }
 
 /**
+    Set module detach mode.
+
+    \param ftdi pointer to ftdi_context
+    \param mode detach mode to use.
+
+    \retval  0: all fine
+    \retval -1: can't enable bitbang mode
+*/
+int ftdi_set_module_detach_mode(struct ftdi_context *ftdi, enum ftdi_module_detach_mode mode)
+{
+    if (ftdi == NULL)
+        ftdi_error_return(-1, "FTDI context invalid");
+
+    ftdi->module_detach_mode = mode;
+    return 0;
+}
+
+/**
     Disable bitbang mode.
 
     \param ftdi pointer to ftdi_context

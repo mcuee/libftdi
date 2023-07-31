@@ -4183,6 +4183,9 @@ int ftdi_get_eeprom_value(struct ftdi_context *ftdi, enum ftdi_eeprom_value valu
         case EXTERNAL_OSCILLATOR:
             *value = ftdi->eeprom->external_oscillator;
             break;
+        case USER_DATA_ADDR:
+            *value = ftdi->eeprom->user_data_addr;
+            break;
         default:
             ftdi_error_return(-1, "Request for unknown EEPROM value");
     }

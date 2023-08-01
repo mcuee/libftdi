@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+
 # Project
 project(libftdi1 C)
 set(MAJOR_VERSION 1)
@@ -12,7 +14,6 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
    set(CMAKE_BUILD_TYPE     RelWithDebInfo)
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
 set(CMAKE_COLOR_MAKEFILE ON)
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 
 add_definitions(-Wall)
 
@@ -211,30 +212,25 @@ set ( LIBFTDI_VERSION_MINOR ${MINOR_VERSION} )
 
 set ( LIBFTDI_USE_FILE ${CMAKE_INSTALL_PREFIX}/${LIBFTDI_CMAKE_CONFIG_DIR}/UseLibFTDI1.cmake )
 
-if(CMAKE_VERSION VERSION_LESS 2.8.8) 
-  configure_file ( cmake/LibFTDI1Config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake @ONLY )
-  configure_file ( cmake/LibFTDI1ConfigVersion.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1ConfigVersion.cmake @ONLY )
-else ()
-  include(CMakePackageConfigHelpers)
+include(CMakePackageConfigHelpers)
 
-  configure_package_config_file (
-    cmake/LibFTDI1Config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake
-    INSTALL_DESTINATION ${LIBFTDI_CMAKE_CONFIG_DIR}
-    PATH_VARS
-      LIBFTDI_USE_FILE
-      LIBFTDI_ROOT_DIR
-      LIBFTDI_INCLUDE_DIR
-      LIBFTDI_INCLUDE_DIRS
-      LIBFTDI_LIBRARY_DIRS
-    NO_CHECK_REQUIRED_COMPONENTS_MACRO
-  )
-  write_basic_package_version_file (
-    LibFTDI1ConfigVersion.cmake 
-    VERSION ${LIBFTDI_VERSION_STRING} 
-    COMPATIBILITY AnyNewerVersion
-  )
-endif ()
+configure_package_config_file (
+  cmake/LibFTDI1Config.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake
+  INSTALL_DESTINATION ${LIBFTDI_CMAKE_CONFIG_DIR}
+  PATH_VARS
+    LIBFTDI_USE_FILE
+    LIBFTDI_ROOT_DIR
+    LIBFTDI_INCLUDE_DIR
+    LIBFTDI_INCLUDE_DIRS
+    LIBFTDI_LIBRARY_DIRS
+  NO_CHECK_REQUIRED_COMPONENTS_MACRO
+)
+write_basic_package_version_file (
+  LibFTDI1ConfigVersion.cmake
+  VERSION ${LIBFTDI_VERSION_STRING}
+  COMPATIBILITY AnyNewerVersion
+)
 
 
 install ( FILES 

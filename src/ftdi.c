@@ -83,7 +83,7 @@ static void ftdi_usb_close_internal (struct ftdi_context *ftdi)
 
     \retval  0: all fine
     \retval -1: couldn't allocate read buffer
-    \retval -2: couldn't allocate struct  buffer
+    \retval -2: couldn't allocate struct buffer
     \retval -3: libusb_init() failed
 
     \remark This should be called before all functions
@@ -112,7 +112,7 @@ int ftdi_init(struct ftdi_context *ftdi)
         ftdi_error_return(-3, "libusb_init() failed");
 
     ftdi_set_interface(ftdi, INTERFACE_ANY);
-    ftdi->bitbang_mode = 1; /* when bitbang is enabled this holds the number of the mode  */
+    ftdi->bitbang_mode = 1; /* when bitbang is enabled this holds the number of the mode */
 
     eeprom = (struct ftdi_eeprom *)malloc(sizeof(struct ftdi_eeprom));
     if (eeprom == 0)
@@ -298,7 +298,7 @@ struct ftdi_version_info ftdi_get_library_version(void)
 /**
     Finds all ftdi devices with given VID:PID on the usb bus. Creates a new
     ftdi_device_list which needs to be deallocated by ftdi_list_free() after
-    use.  With VID:PID 0:0, search for the default devices
+    use. With VID:PID 0:0, search for the default devices
     (0x403:0x6001, 0x403:0x6010, 0x403:0x6011, 0x403:0x6014, 0x403:0x6015)
 
     \param ftdi pointer to ftdi_context
@@ -639,7 +639,7 @@ int ftdi_usb_open_dev(struct ftdi_context *ftdi, libusb_device *dev)
         ftdi_error_return(-12, "libusb_get_configuration () failed");
     // set configuration (needed especially for windows)
     // tolerate EBUSY: one device with one configuration, but two interfaces
-    //    and libftdi sessions to both interfaces (e.g. FT2232)
+    // and libftdi sessions to both interfaces (e.g. FT2232)
     if (desc.bNumConfigurations > 0 && cfg != cfg0)
     {
         if (libusb_set_configuration(ftdi->usb_dev, cfg0) < 0)
@@ -1316,7 +1316,7 @@ static int ftdi_to_clkbits_AM(int baudrate, unsigned long *encoded_divisor)
     return best_baud;
 }
 
-/*  ftdi_to_clkbits Convert a requested baudrate for a given system clock  and predivisor
+/*  ftdi_to_clkbits Convert a requested baudrate for a given system clock and predivisor
                     to encoded divisor and the achievable baudrate
     Function is only used internally
     \internal
@@ -3072,7 +3072,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
             i = 0xa0;
             break;
     }
-    /* Wrap around 0x80 for 128 byte EEPROMS (Internale and 93x46) */
+    /* Wrap around 0x80 for 128 byte EEPROMS (Internal and 93x46) */
     eeprom_size_mask = eeprom->size -1;
     free_end = i & eeprom_size_mask;
 
@@ -3136,7 +3136,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
     }
 
     /* Bytes and Bits specific to (some) types
-       Write linear, as this allows easier fixing*/
+       Write linear, as this allows easier fixing */
     switch (ftdi->type)
     {
         case TYPE_AM:
@@ -3208,7 +3208,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
 
             if (eeprom->external_oscillator)
                 output[0x00] |= 0x02;
-            output[0x01] = 0x40; /* Hard coded Endpoint Size*/
+            output[0x01] = 0x40; /* Hard coded Endpoint Size */
 
             if (eeprom->suspend_pull_downs)
                 output[0x0A] |= 0x4;
@@ -3440,7 +3440,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
         case TYPE_230X:
             output[0x00] = 0x80; /* Actually, leave the default value */
             /*FIXME: Make DBUS & CBUS Control configurable*/
-            output[0x0c] = 0;    /* DBUS drive 4mA, CBUS drive 4 mA like factory default */
+            output[0x0c] = 0;    /* DBUS drive 4mA, CBUS drive 4mA like factory default */
             for (j = 0; j <= 6; j++)
             {
                 output[0x1a + j] = eeprom->cbus_function[j];

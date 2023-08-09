@@ -3049,7 +3049,7 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
     // Dynamic content
     // Strings start at 0x94 (TYPE_AM, TYPE_BM)
     // 0x96 (TYPE_2232C), 0x98 (TYPE_R) and 0x9a (TYPE_x232H)
-    // 0xa0 (TYPE_232H)
+    // 0xa0 (TYPE_232H, TYPE_230X)
     i = 0;
     switch (ftdi->type)
     {

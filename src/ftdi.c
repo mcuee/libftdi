@@ -3503,6 +3503,8 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
                 i = 0x50;
             }
             value = data;
+            output[i * 2] = data;
+            output[(i * 2) + 1] = data >> 8;
         }
         else {
             value = output[i*2];

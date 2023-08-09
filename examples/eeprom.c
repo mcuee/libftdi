@@ -151,14 +151,14 @@ int main(int argc, char **argv)
         if (res > 1)
         {
             int i = 1;
-            fprintf(stderr, "%d FTDI devices found: Only Readout on EEPROM done. ",res);
+            fprintf(stderr, "%d FTDI devices found: Only Readout on EEPROM done. \n",res);
             fprintf(stderr, "Use VID/PID/desc/serial to select device\n");
             for (curdev = devlist; curdev != NULL; curdev= curdev->next, i++)
             {
                 f = ftdi_usb_open_dev(ftdi,  curdev->dev);
                 if (f<0)
                 {
-                    fprintf(stderr, "Unable to open device %d: (%s)",
+                    fprintf(stderr, "Unable to open device %d: (%s)\n",
                             i, ftdi_get_error_string(ftdi));
                     continue;
                 }
@@ -175,7 +175,7 @@ int main(int argc, char **argv)
             f = ftdi_usb_open_dev(ftdi,  devlist[0].dev);
             if (f<0)
             {
-                fprintf(stderr, "Unable to open device %d: (%s)",
+                fprintf(stderr, "Unable to open device %d: (%s)\n",
                         i, ftdi_get_error_string(ftdi));
             }
         }
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
         f = ftdi_erase_eeprom(ftdi); /* needed to determine EEPROM chip type */
         if (f < 0)
         {
-            fprintf(stderr, "Erase failed: %s",
+            fprintf(stderr, "Erase failed: %s\n",
                     ftdi_get_error_string(ftdi));
             retval =  -2;
             goto done;
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
         f=(ftdi_eeprom_build(ftdi));
         if (f < 0)
         {
-            fprintf(stderr, "Erase failed: %s",
+            fprintf(stderr, "Erase failed: %s\n",
                     ftdi_get_error_string(ftdi));
             retval = -2;
             goto done;

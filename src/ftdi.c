@@ -3880,7 +3880,7 @@ int ftdi_eeprom_decode(struct ftdi_context *ftdi, int verbose)
                     (eeprom->data_order)?"LSB":"MSB",
                     (eeprom->flow_control)?"":"No ");
         }
-        if ((ftdi->type == TYPE_2232H) || (ftdi->type == TYPE_4232H))
+        if ((ftdi->type == TYPE_2232H) || (ftdi->type == TYPE_4232H) || (ftdi->type == TYPE_2232C))
             fprintf(stdout,"Channel B has Mode %s%s%s\n",
                     channel_mode[eeprom->channel_b_type],
                     (eeprom->channel_b_driver)?" VCP":"",

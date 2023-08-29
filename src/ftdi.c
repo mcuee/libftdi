@@ -3125,6 +3125,8 @@ int ftdi_eeprom_build(struct ftdi_context *ftdi)
         i++;
         output[i & eeprom_size_mask] = eeprom->is_not_pnp; /* as seen when written with FTD2XX */
         i++;
+        output[i & eeprom_size_mask] = 0x00;
+        i++;
     }
 
     if (ftdi->type > TYPE_AM) /* use_serial not used in AM devices */

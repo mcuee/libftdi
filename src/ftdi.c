@@ -3885,6 +3885,13 @@ int ftdi_eeprom_decode(struct ftdi_context *ftdi, int verbose)
                     channel_mode[eeprom->channel_b_type],
                     (eeprom->channel_b_driver)?" VCP":"",
                     (eeprom->high_current_b)?" High Current IO":"");
+        if (ftdi->type == TYPE_4232H)
+        {
+            fprintf(stdout,"Channel C has Mode UART%s\n",
+                    (eeprom->channel_c_driver)?" VCP":"");
+            fprintf(stdout,"Channel D has Mode UART%s\n",
+                    (eeprom->channel_d_driver)?" VCP":"");
+        }
         if (((ftdi->type == TYPE_BM) || (ftdi->type == TYPE_2232C)) &&
                 eeprom->use_usb_version)
             fprintf(stdout,"Use explicit USB Version %04x\n",eeprom->usb_version);

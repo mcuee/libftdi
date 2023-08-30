@@ -6,8 +6,9 @@ set(cpp_headers ${CMAKE_CURRENT_SOURCE_DIR}/ftdi.hpp CACHE INTERNAL "List of cpp
 
 # Includes
 include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}
-	${CMAKE_SOURCE_DIR}/src)
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_SOURCE_DIR}/src
+)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -24,24 +25,24 @@ set_target_properties(ftdipp1 PROPERTIES CLEAN_DIRECT_OUTPUT 1)
 target_link_libraries(ftdipp1 ftdi1 ${LIBUSB_LIBRARIES} ${BOOST_LIBRARIES})
 
 install ( TARGETS ftdipp1
-					RUNTIME DESTINATION bin
-					LIBRARY DESTINATION lib${LIB_SUFFIX}
-					ARCHIVE DESTINATION lib${LIB_SUFFIX}
-				)
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib${LIB_SUFFIX}
+          ARCHIVE DESTINATION lib${LIB_SUFFIX}
+)
 
 # Static library
 if ( STATICLIBS )
-	add_library(ftdipp1-static STATIC ${cpp_sources})
-	set_target_properties(ftdipp1-static PROPERTIES OUTPUT_NAME "ftdipp1")
-	set_target_properties(ftdipp1-static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+  add_library(ftdipp1-static STATIC ${cpp_sources})
+  set_target_properties(ftdipp1-static PROPERTIES OUTPUT_NAME "ftdipp1")
+  set_target_properties(ftdipp1-static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
 
-	install ( TARGETS ftdipp1-static
-						ARCHIVE DESTINATION lib${LIB_SUFFIX}
-						COMPONENT staticlibs
-					)
+  install ( TARGETS ftdipp1-static
+            ARCHIVE DESTINATION lib${LIB_SUFFIX}
+            COMPONENT staticlibs
+  )
 endif ()
 
 install ( FILES ${cpp_headers}
-					DESTINATION include/${PROJECT_NAME}
-					COMPONENT headers
-				)
+          DESTINATION include/${PROJECT_NAME}
+          COMPONENT headers
+)

@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # CMake
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-   set(CMAKE_BUILD_TYPE     RelWithDebInfo)
+  set(CMAKE_BUILD_TYPE     RelWithDebInfo)
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
 set(CMAKE_COLOR_MAKEFILE ON)
 
@@ -22,7 +22,7 @@ include(CMakeOptions.txt)
 # Debug build
 message("-- Build type: ${CMAKE_BUILD_TYPE}")
 if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
-   add_definitions(-DDEBUG)
+  add_definitions(-DDEBUG)
 endif(${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 # find libusb
@@ -59,7 +59,7 @@ set(CPACK_COMPONENT_SHAREDLIBS_GROUP "Development")
 set(CPACK_COMPONENT_STATICLIBS_GROUP "Development")
 set(CPACK_COMPONENT_HEADERS_GROUP    "Development")
 
-# guess LIB_SUFFIX, don't take debian multiarch into account 
+# guess LIB_SUFFIX, don't take debian multiarch into account
 if ( NOT DEFINED LIB_SUFFIX )
   if( CMAKE_SYSTEM_NAME MATCHES "Linux"
       AND NOT CMAKE_CROSSCOMPILING
@@ -73,9 +73,9 @@ endif ()
 
 if(NOT APPLE)
   if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-      SET(PACK_ARCH "")
-    else(CMAKE_SIZEOF_VOID_P EQUAL 8)
-      SET(PACK_ARCH .x86_64)
+    SET(PACK_ARCH "")
+  else(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    SET(PACK_ARCH .x86_64)
   endif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 else(NOT APPLE)
   SET(PACK_ARCH "")
@@ -85,8 +85,8 @@ endif(NOT APPLE)
 set(CPACK_PACKAGE_VERSION              ${VERSION_STRING})
 set(CPACK_PACKAGE_CONTACT              "Intra2net AG <libftdi@developer.intra2net.com>")
 set(CPACK_PACKAGE_DESCRIPTION          "libftdi1 library.")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY  ${CPACK_PACKAGE_DESCRIPTION}
-                                       )
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY  ${CPACK_PACKAGE_DESCRIPTION})
+
 # Package settings
 if ( UNIX )
   set(CPACK_GENERATOR                    "DEB;RPM")
@@ -125,22 +125,22 @@ add_custom_target(dist
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 if ( DOCUMENTATION )
-   find_package ( Doxygen REQUIRED)
+  find_package ( Doxygen REQUIRED)
 
-   # Copy doxy.config.in
-   set(top_srcdir ${CMAKE_SOURCE_DIR})
-   configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.in ${CMAKE_BINARY_DIR}/Doxyfile )
-   configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.xml.in ${CMAKE_BINARY_DIR}/Doxyfile.xml )
+  # Copy doxy.config.in
+  set(top_srcdir ${CMAKE_SOURCE_DIR})
+  configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.in ${CMAKE_BINARY_DIR}/Doxyfile )
+  configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.xml.in ${CMAKE_BINARY_DIR}/Doxyfile.xml )
 
-   # Run doxygen
-   add_custom_command(
+  # Run doxygen
+  add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/doc/html/index.html
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/doc
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
     DEPENDS ${c_headers};${c_sources};${cpp_sources};${cpp_headers}
-   )
+  )
 
-   add_custom_target(docs ALL DEPENDS ${CMAKE_BINARY_DIR}/doc/html/index.html)
+  add_custom_target(docs ALL DEPENDS ${CMAKE_BINARY_DIR}/doc/html/index.html)
 endif ()
 
 add_subdirectory(src)
@@ -169,10 +169,10 @@ set(exec_prefix ${CMAKE_INSTALL_PREFIX}/bin)
 set(includedir  ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
 
 if(${UNIX})
-   set(libdir      ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
+  set(libdir      ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
 endif(${UNIX})
 if(${WIN32})
-   set(libdir      ${CMAKE_INSTALL_PREFIX}/bin)
+  set(libdir      ${CMAKE_INSTALL_PREFIX}/bin)
 endif(${WIN32})
 
 configure_file(${CMAKE_SOURCE_DIR}/libftdi1.pc.in ${CMAKE_BINARY_DIR}/libftdi1.pc @ONLY)
@@ -232,14 +232,13 @@ write_basic_package_version_file (
   COMPATIBILITY AnyNewerVersion
 )
 
-
-install ( FILES 
-            ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake
-            ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1ConfigVersion.cmake
-            cmake/UseLibFTDI1.cmake
-
-          DESTINATION ${LIBFTDI_CMAKE_CONFIG_DIR}
-        )
+install (
+  FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1ConfigVersion.cmake
+    cmake/UseLibFTDI1.cmake
+  DESTINATION ${LIBFTDI_CMAKE_CONFIG_DIR}
+)
 
 include(CPack)
 

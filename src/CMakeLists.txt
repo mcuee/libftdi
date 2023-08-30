@@ -1,7 +1,7 @@
 # Includes
 include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     )
+                      ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 # Version information
 set(SNAPSHOT_VERSION "unknown")
@@ -9,7 +9,7 @@ execute_process(COMMAND git describe
                 OUTPUT_VARIABLE GIT_DESCRIBE_OUTPUT
                 RESULT_VARIABLE GIT_DESCRIBE_RESULT
                 OUTPUT_STRIP_TRAILING_WHITESPACE
-                )
+)
 if(${GIT_DESCRIBE_RESULT} STREQUAL 0)
   set(SNAPSHOT_VERSION ${GIT_DESCRIBE_OUTPUT})
 endif ()
@@ -36,7 +36,7 @@ install ( TARGETS ftdi1
           RUNTIME DESTINATION bin
           LIBRARY DESTINATION lib${LIB_SUFFIX}
           ARCHIVE DESTINATION lib${LIB_SUFFIX}
-        )
+)
 
 if ( STATICLIBS )
   add_library(ftdi1-static STATIC ${c_sources})
@@ -46,10 +46,10 @@ if ( STATICLIBS )
   install ( TARGETS ftdi1-static
             ARCHIVE DESTINATION lib${LIB_SUFFIX}
             COMPONENT staticlibs
-          )
+  )
 endif ()
 
 install ( FILES ${c_headers}
           DESTINATION include/${PROJECT_NAME}
           COMPONENT headers
-        )
+)

@@ -90,6 +90,8 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
+    ftdi->module_detach_mode = AUTO_DETACH_REATACH_SIO_MODULE;
+
     while ((i = getopt(argc, argv, "d::ev:p:l:P:S:w")) != -1)
     {
         switch (i)
@@ -200,7 +202,7 @@ int main(int argc, char **argv)
             fprintf(stderr, "\n");
             fprintf(stderr, "unable to open ftdi device: %d (%s)\n",
                     f, ftdi_get_error_string(ftdi));
-            
+
             retval = -1;
             goto done;
         }

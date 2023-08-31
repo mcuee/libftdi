@@ -137,11 +137,16 @@ if ( DOCUMENTATION )
     OUTPUT ${CMAKE_BINARY_DIR}/doc/html/index.html
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/doc
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
+    COMMENT "Generating API documentation"
     DEPENDS ${c_headers};${c_sources};${cpp_sources};${cpp_headers}
   )
 
-  add_custom_target(docs ALL DEPENDS ${CMAKE_BINARY_DIR}/doc/html/index.html)
-endif ()
+  add_custom_target(
+    docs ALL
+    COMMENT "Documentation target docs"
+    DEPENDS ${CMAKE_BINARY_DIR}/doc/html/index.html
+  )
+endif ( DOCUMENTATION )
 
 add_subdirectory(src)
 if ( FTDIPP )

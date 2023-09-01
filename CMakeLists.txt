@@ -9,6 +9,23 @@ set(VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 set(VERSION ${VERSION_STRING})
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+# Support new if() IN_LIST operator
+if(POLICY CMP0057)
+  cmake_policy(SET CMP0057 NEW)
+endif()
+
+# Included scripts do automatic cmake_policy() PUSH and POP
+if(POLICY CMP0011)
+  cmake_policy(SET CMP0011 NEW)
+endif()
+
+# Target link properties INTERFACE_LINK_OPTIONS, INTERFACE_LINK_DIRECTORIES
+# and INTERFACE_LINK_DEPENDS are now transitive over private dependencies
+# of static libraries
+if(POLICY CMP0099)
+  cmake_policy(SET CMP0099 NEW)
+endif()
+
 # CMake
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
   set(CMAKE_BUILD_TYPE     RelWithDebInfo)

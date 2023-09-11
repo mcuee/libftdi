@@ -27,7 +27,7 @@ set ( EEPROM_MAJOR_VERSION 0 )
 set ( EEPROM_MINOR_VERSION 17 )
 set ( EEPROM_VERSION_STRING ${EEPROM_MAJOR_VERSION}.${EEPROM_MINOR_VERSION} )
 
-include_directories ( BEFORE ${CMAKE_SOURCE_DIR}/src )
+include_directories ( BEFORE ${PROJECT_SOURCE_DIR}/src )
 include_directories ( BEFORE ${CMAKE_CURRENT_BINARY_DIR} )
 
 configure_file(

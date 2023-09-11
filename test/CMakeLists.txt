@@ -2,7 +2,7 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 enable_testing()
 
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/src ${Boost_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/src ${Boost_INCLUDE_DIRS})
 
 set(cpp_tests basic.cpp baudrate.cpp)
 

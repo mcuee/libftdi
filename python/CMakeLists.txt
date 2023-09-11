@@ -18,7 +18,7 @@ find_package ( PythonInterp REQUIRED )
 find_package ( PythonLibs REQUIRED )
 
 include ( UseSWIG )
-include_directories ( BEFORE ${CMAKE_SOURCE_DIR}/src )
+include_directories ( BEFORE ${PROJECT_SOURCE_DIR}/src )
 include_directories ( ${PYTHON_INCLUDE_DIRS} )
 link_directories ( ${CMAKE_CURRENT_BINARY_DIR}/../src )
 

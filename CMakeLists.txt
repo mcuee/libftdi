@@ -9,7 +9,7 @@ set(MINOR_VERSION 5)
 set(PACKAGE libftdi1)
 set(VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 set(VERSION ${VERSION_STRING})
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # Support new if() IN_LIST operator
 if(POLICY CMP0057)
@@ -117,7 +117,7 @@ if ( WIN32 )
   set ( CPACK_NSIS_MODIFY_PATH             ON )
 endif ()
 
-set(CPACK_RESOURCE_FILE_LICENSE        ${CMAKE_SOURCE_DIR}/LICENSE)
+set(CPACK_RESOURCE_FILE_LICENSE        ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
 
 set(CPACK_SOURCE_GENERATOR             TGZ)
 set(CPACK_SOURCE_IGNORE_FILES          "\\\\.git;~$;build/")
@@ -132,8 +132,8 @@ endif ()
 set(ARCHIVE_NAME ${CMAKE_PROJECT_NAME}-${VERSION_STRING})
 add_custom_target(dist
     COMMAND git archive --prefix=${ARCHIVE_NAME}/ HEAD
-            | bzip2 > ${CMAKE_BINARY_DIR}/${ARCHIVE_NAME}.tar.bz2
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+      | bzip2 > ${PROJECT_BINARY_DIR}/${ARCHIVE_NAME}.tar.bz2
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(packages)
@@ -176,9 +176,9 @@ if(${WIN32})
   set(libdir      ${CMAKE_INSTALL_PREFIX}/bin)
 endif(${WIN32})
 
-configure_file(${CMAKE_SOURCE_DIR}/libftdi1.pc.in ${CMAKE_BINARY_DIR}/libftdi1.pc @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/libftdipp1.pc.in ${CMAKE_BINARY_DIR}/libftdipp1.pc @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/libftdi1.pc ${CMAKE_BINARY_DIR}/libftdipp1.pc
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libftdi1.pc.in ${CMAKE_CURRENT_BINARY_DIR}/libftdi1.pc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libftdipp1.pc.in ${CMAKE_CURRENT_BINARY_DIR}/libftdipp1.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libftdi1.pc ${CMAKE_CURRENT_BINARY_DIR}/libftdipp1.pc
         DESTINATION lib${LIB_SUFFIX}/pkgconfig)
 
 if (UNIX OR MINGW)

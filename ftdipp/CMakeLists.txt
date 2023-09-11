@@ -5,7 +5,7 @@ set(cpp_headers ${CMAKE_CURRENT_SOURCE_DIR}/ftdi.hpp CACHE INTERNAL "List of cpp
 # Includes
 include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/src
+  ${PROJECT_SOURCE_DIR}/src
 )
 
 include_directories(${Boost_INCLUDE_DIRS})

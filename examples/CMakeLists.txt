@@ -37,7 +37,7 @@ endif(NOT MINGW)
 
 # libftdi++ examples
 if( FTDIPP )
-  include_directories(BEFORE ${CMAKE_SOURCE_DIR}/ftdipp
+  include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ftdipp
     ${Boost_INCLUDE_DIRS}
   )
 
@@ -49,4 +49,4 @@ if( FTDIPP )
 endif( FTDIPP )
 
 # Source includes
-include_directories(BEFORE ${CMAKE_SOURCE_DIR}/src)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/src)

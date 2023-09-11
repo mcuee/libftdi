@@ -142,27 +142,7 @@ add_custom_target(dist
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 if ( DOCUMENTATION )
-  find_package ( Doxygen REQUIRED)
-
-  # Copy doxy.config.in
-  set(top_srcdir ${CMAKE_SOURCE_DIR})
-  configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.in ${CMAKE_BINARY_DIR}/Doxyfile )
-  configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.xml.in ${CMAKE_BINARY_DIR}/Doxyfile.xml )
-
-  # Run doxygen
-  add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/doc/html/index.html
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/doc
-    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
-    COMMENT "Generating API documentation"
-    DEPENDS ${c_headers};${c_sources};${cpp_sources};${cpp_headers}
-  )
-
-  add_custom_target(
-    docs ALL
-    COMMENT "Documentation target docs"
-    DEPENDS ${CMAKE_BINARY_DIR}/doc/html/index.html
-  )
+  add_subdirectory(doc)
 endif ( DOCUMENTATION )
 
 add_subdirectory(src)

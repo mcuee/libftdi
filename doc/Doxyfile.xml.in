@@ -2,7 +2,7 @@
 
 # xml generation only
 # keep settings but shut off all other generation
-@INCLUDE = Doxyfile
+@INCLUDE = doc/Doxyfile
 
 GENERATE_TODOLIST      = NO
 GENERATE_TESTLIST      = NO

@@ -1,4 +1,4 @@
-# - Try to find the freetype library
+# - Try to find the libusb library
 # Once done this defines
 #
 #  LIBUSB_FOUND - system has libusb
@@ -9,7 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-
 
 if (LIBUSB_INCLUDE_DIR AND LIBUSB_LIBRARIES)
 
@@ -22,16 +21,18 @@ else (LIBUSB_INCLUDE_DIR AND LIBUSB_LIBRARIES)
   find_package(PkgConfig)
   pkg_check_modules(PC_LIBUSB libusb-1.0)
 
-  FIND_PATH(LIBUSB_INCLUDE_DIR libusb.h
+  find_path(LIBUSB_INCLUDE_DIR libusb.h
     PATH_SUFFIXES libusb-1.0
     PATHS ${PC_LIBUSB_INCLUDEDIR} ${PC_LIBUSB_INCLUDE_DIRS})
 
-  FIND_LIBRARY(LIBUSB_LIBRARIES NAMES usb-1.0
+  find_library(LIBUSB_LIBRARIES NAMES usb-1.0
     PATHS ${PC_LIBUSB_LIBDIR} ${PC_LIBUSB_LIBRARY_DIRS})
 
   include(FindPackageHandleStandardArgs)
-  FIND_PACKAGE_HANDLE_STANDARD_ARGS(LIBUSB DEFAULT_MSG LIBUSB_LIBRARIES LIBUSB_INCLUDE_DIR)
+  find_package_handle_standard_args(
+    LibUSB DEFAULT_MSG LIBUSB_LIBRARIES LIBUSB_INCLUDE_DIR
+  )
 
-  MARK_AS_ADVANCED(LIBUSB_INCLUDE_DIR LIBUSB_LIBRARIES)
+  mark_as_advanced(LIBUSB_INCLUDE_DIR LIBUSB_LIBRARIES)
 
 endif (LIBUSB_INCLUDE_DIR AND LIBUSB_LIBRARIES)

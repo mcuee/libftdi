@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
+message(STATUS "CMake version: ${CMAKE_VERSION}")
+
 # Project
 project(libftdi1 C)
 set(MAJOR_VERSION 1)

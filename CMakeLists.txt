@@ -135,29 +135,34 @@ add_custom_target(dist
             | bzip2 > ${CMAKE_BINARY_DIR}/${ARCHIVE_NAME}.tar.bz2
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
+add_subdirectory(src)
+add_subdirectory(packages)
+
 if ( DOCUMENTATION )
   add_subdirectory(doc)
 endif ( DOCUMENTATION )
 
-add_subdirectory(src)
 if ( FTDIPP )
   project(libftdi1 C CXX)
   add_subdirectory(ftdipp)
-endif ()
+endif ( FTDIPP )
+
 if ( PYTHON_BINDINGS )
-add_subdirectory(python)
-endif ()
+  add_subdirectory(python)
+endif ( PYTHON_BINDINGS )
+
 if ( FTDI_EEPROM )
   add_subdirectory(ftdi_eeprom)
-endif ()
+endif ( FTDI_EEPROM )
+
 if ( EXAMPLES )
   add_subdirectory(examples)
-endif ()
-add_subdirectory(packages)
+endif ( EXAMPLES )
+
 if ( BUILD_TESTS )
   project(libftdi1 C CXX)
   add_subdirectory(test)
-endif ()
+endif ( BUILD_TESTS )
 
 # PkgConfig
 set(prefix      ${CMAKE_INSTALL_PREFIX})
